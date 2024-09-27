@@ -5,12 +5,12 @@ app = Flask(__name__)
 
 api = Api(app)
 
-class Hello(Resource):
+class PythonApi(Resource):
     def get(self):
         return jsonify({'message':'hello world'})
     
 
-api.add_resource(Hello, '/')
+api.add_resource(PythonApi, '/')
 
 if __name__ == '__main__':
     app.run(debug=True)
