@@ -1,7 +1,6 @@
 import psycopg2 
 import os
 from dotenv import load_dotenv
-from config import config
 
 load_dotenv()
 
@@ -10,6 +9,8 @@ def Select_All(connection):
     cursor = connection.cursor()
     cursor.execute("Select * from person")
     results = cursor.fetchall()
+    cursor.close()
+    connection.close()
     return results
 
 def Connect():
@@ -27,4 +28,6 @@ def Connect():
 
     except (Exception, psycopg2.DatabaseError ) as error:
         print(error)        
+
+
 
