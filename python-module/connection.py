@@ -1,16 +1,11 @@
 import psycopg2 
 from config import config
 
-
-
-
-
 def Select_All(connection):
     cursor = connection.cursor()
     cursor.execute("Select * from person")
     results = cursor.fetchall()
     return results
-
 
 def Connect():
     try:
