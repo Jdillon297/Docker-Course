@@ -14,7 +14,7 @@ class PythonApi(Resource):
        return jsonify(results)
     
 
-api.add_resource(PythonApi, '/python-api')
+api.add_resource(PythonApi, '/')
 
 if __name__ == '__main__':
     app.run(debug=True)

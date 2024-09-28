@@ -1,5 +1,10 @@
 import psycopg2 
+import os
+from dotenv import load_dotenv
 from config import config
+
+load_dotenv()
+
 
 def Select_All(connection):
     cursor = connection.cursor()
@@ -9,15 +14,14 @@ def Select_All(connection):
 
 def Connect():
     try:
-        params = config()
 
         print('Connection to the PostgresSQL database....')
         connection = psycopg2.connect(
-            host=params['host'],
-            database=params['database'],
-            user=params['user'],
-            password=params['password'],
-            port=params['port']
+            host=os.getenv("HOST"),
+            database=os.getenv("DATABASE"),
+            user=os.getenv("USER"),
+            password=os.getenv("PASSWORD"),
+            port=os.getenv("PORT")
         )                
         return connection
 
