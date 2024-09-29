@@ -1,13 +1,13 @@
 require("dotenv").config();
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
 class PostgresClient {
   constructor() {
-    this.host = process.env.POSTGRES_HOST;
-    this.db = process.env.POSTGRES_DB;
-    this.dbUser = process.env.POSTGRES_USER;
-    this.password = process.env.POSTGRES_PASSWORD;
-    this.port = process.env.PORT;
+    this.host = process.env.DB_HOST;
+    this.db = process.env.DB_NAME;
+    this.dbUser = process.env.DB_USER;
+    this.password = process.env.DB_PASSWORD;
+    this.port = process.env.DB_PORT;
   }
 
   async SelectAllQuery() {
@@ -17,7 +17,7 @@ class PostgresClient {
   }
 
   async Connect() {
-    const client = new Client({
+    const client = new Pool({
       host: this.host,
       user: this.dbUser,
       database: this.db,

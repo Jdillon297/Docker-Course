@@ -24,7 +24,7 @@ app.get("/node-api", async (req, res) => {
   res.json(response);
 });
 
-const port = 8765;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Server is listening on port: ${port}`);
 });
