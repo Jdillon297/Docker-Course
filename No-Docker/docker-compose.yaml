@@ -6,11 +6,11 @@ services:
       dockerfile: Dockerfile
     container_name: node-api
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: jacob
-      DB_PASSWORD: Password123!
-      DB_NAME: test
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     ports:
       - "3000:3000"
 
@@ -20,11 +20,11 @@ services:
       dockerfile: Dockerfile
     container_name: python-api
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: jacob
-      DB_PASSWORD: Password123!
-      DB_NAME: test
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     ports:
       - "5050:5000"
 
@@ -32,8 +32,8 @@ services:
     image: postgres:latest
     container_name: postgres
     environment:
-      POSTGRES_USER: jacob
-      POSTGRES_PASSWORD: Password123!
-      POSTGRES_DB: test
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5416:5432"
