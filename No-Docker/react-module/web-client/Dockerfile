@@ -1,29 +1,31 @@
-# Stage 1: Build the React application
-FROM node:18 as build
+# Use node:20.15.0-alpine as the base image for the frontend React.js application
+FROM node:20.15.0-alpine
 
-# Set the working directory in the container
-WORKDIR /app
+# Creating the working directory named `app`
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json (if available)
+# Install curl using apk
+RUN apk add --no-cache curl
+
+# Copying all the tools and dependencies in the package.json file to the working directory `app`
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Change ownership to the node user
+RUN chown -R node:node /usr/src/app
 
-# Copy the rest of the application
-COPY . .
+# Installing all the tools and dependencies in the container
+RUN npm ci --only=production
 
-# Build the application
-RUN npm run build
+# Switch to a non-root user
+USER node
 
-# Stage 2: Serve the React application using NGINX
-FROM nginx:alpine
+# Copying all the application source code and files to the working directory `app`
+COPY --chown=node:node ./src ./src
+COPY --chown=node:node ./public ./public  
+COPY --chown=node:node ./node_modules ./node_modules
 
-# Copy the build output from the previous stage to NGINX's web root
-COPY --from=build /app/build /usr/share/nginx/html
+# Exposing the container to run on this port 4000
+EXPOSE 4000
 
-# Expose the port that NGINX is running on
-EXPOSE 3000
-
-# Start NGINX
-CMD ["nginx", "-g", "daemon off;"]
+# Command to start the Docker container for the frontend React.js application
+CMD ["npm", "start"]
