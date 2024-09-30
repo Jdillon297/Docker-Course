@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 app.use(function (req, res, next) {
-  var whitelist = ["localhost:5000", "http://localhost:3000"];
+  var whitelist = ["localhost:5000", "http://localhost:4000"];
   var host = req.get("host");
 
   whitelist.forEach(function (val, key) {

@@ -2,13 +2,13 @@ import axios from "axios";
 
 import { useEffect, useState } from "react";
 
-function DataFetcher({ url, port, route }) {
+function DataFetcher({ url, route }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const apiUrl = `${url + port + route}`;
+        const apiUrl = `${url + route}`;
         const response = await axios.get(`${apiUrl}`);
         if (response.status === 200) {
           console.log(response.data);
@@ -19,7 +19,7 @@ function DataFetcher({ url, port, route }) {
       }
     }
     fetchData();
-  },[]);
+  }, [url, route]);
 
   return (
     <ul>

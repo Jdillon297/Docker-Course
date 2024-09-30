@@ -13,6 +13,10 @@ services:
       DB_NAME: ${DB_NAME}
     ports:
       - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - postgres
 
   pythonapi:
     build:
@@ -27,6 +31,23 @@ services:
       DB_NAME: ${DB_NAME}
     ports:
       - "5050:5000"
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+
+  react:
+    build:
+      context: ./react-module/web-client
+      dockerfile: Dockerfile
+    container_name: reactapp
+    ports:
+      - "4000:4000"
+    networks:
+      - app-network
+    depends_on:
+      - nodeapp
+      - pythonapi
 
   postgres:
     image: postgres:latest
@@ -37,3 +58,25 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "5416:5432"
+    networks:
+      - app-network
+  
+
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80" # Exposing Nginx on port 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - app-network
+      
+    depends_on:
+      - nodeapp
+      - pythonapi
+
+networks:
+  app-network:
+    driver: bridge
