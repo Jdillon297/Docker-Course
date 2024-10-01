@@ -22,7 +22,6 @@ RUN npm install
 # Copying all the application source code and files to the working directory `app`
 COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./public ./public  
-COPY --chown=node:node ./node_modules ./node_modules
 
 # Exposing the container to run on this port 4000
 EXPOSE 4000
