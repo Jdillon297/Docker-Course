@@ -14,10 +14,10 @@ COPY package*.json ./
 RUN chown -R node:node /usr/src/app
 
 # Installing all the tools and dependencies in the container
-RUN npm ci --only=production
-
-# Switch to a non-root user
+#RUN npm ci --only=production
 USER node
+RUN npm install
+# Switch to a non-root user
 
 # Copying all the application source code and files to the working directory `app`
 COPY --chown=node:node ./src ./src
@@ -26,6 +26,8 @@ COPY --chown=node:node ./node_modules ./node_modules
 
 # Exposing the container to run on this port 4000
 EXPOSE 4000
+
+
 
 # Command to start the Docker container for the frontend React.js application
 CMD ["npm", "start"]
